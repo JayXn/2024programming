@@ -37,15 +37,30 @@ void inputArray()
 
 void search_print(int x_cell, int y_cell)
 {
-  for(int dy = -1 ; dy <= 1 ; dy++ ){
-    for(int dx = -1 ; dx <= 1 ; dx++){
-      for(int x_point = dx ; x_point < 8, x_point > -8 ; x_point += dx){
-        if(chess[y_cell][x_cell + x_point] == 0){
+  int x_change = x_cell;
+  int y_change = y_cell;
+  for(int i = -1 ; i <= 1 ; i++ ){
+    for(int j = -1 ; j <= 1 ; j++){
+      while(x_change < 8, x_change >= 0){
+        x_change = x_change + j;
+        int sum = 0;
+        sum += 1;
+
+        if((i != 0) || j == 0){
           break;
         }
-        else if(chess[y_cell][x_cell + x_point] == color && abs(x_point) > 2)
-          printf("(%d,%d)能下 %d 的子", x_cell + x_point, y_cell, color);
+        else if(chess[y_change][x_change] == 0){
+          break;
+        }
+        else if(chess[y_change][x_change] == color && sum < 2){
+          break;
+        }
+        else if(chess[y_change][x_change] == color && sum >= 2){
+          printf("(%d,%d)能下 %d 的子", x_change, y_cell, color);
+          break;
+        }
       }
+
     }
   }
 }
