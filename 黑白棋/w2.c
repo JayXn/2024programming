@@ -41,7 +41,7 @@ void search_print(int x_cell, int y_cell)
     for(int dx = -1 ; dx <= 1 ; dx++){
       for(int x_point = dx ; x_point < 8, x_point > -8 ; x_point += dx){
         if(chess[y_cell][x_cell + x_point] == 0){
-          break;
+          continue;
         }
         else if(chess[y_cell][x_cell + x_point] == color && abs(x_point) > 2)
           printf("(%d,%d)能下 %d 的子", x_cell + x_point, y_cell, color);
