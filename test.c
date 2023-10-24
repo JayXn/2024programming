@@ -24,15 +24,15 @@ void print_color(int x_cell, int y_cell)
 {
   if (chess[x_cell][y_cell] == 0)
   {
-    printf("空白");
+    printf("空白\n");
   }
   else if (chess[x_cell][y_cell] == 1)
   {
-    printf("黑色");
+    printf("黑色\n");
   }
   else if (chess[x_cell][y_cell] == 2)
   {
-    printf("白色");
+    printf("白色\n");
   }
 }
 
@@ -58,7 +58,7 @@ void search_print(int x_cell, int y_cell)
           break;
         }
         else if(chess[y_change][x_change] == color && sum >= 2){
-          printf("(%d,%d)能下 %d 的子\n", x_change, y_change, color);
+          printf("(%d,%d)能下 color=%d 的子\n", x_change, y_change, color);
           break;
         }
       }
@@ -78,7 +78,7 @@ void search_print(int x_cell, int y_cell)
           break;
         }
         else if(chess[y_change][x_change] == color && sum >= 2){
-          printf("(%d,%d)能下 %d 的子\n", x_change, y_change, color);
+          printf("(%d,%d)能下 color=%d 的子\n", x_change, y_change, color);
           break;
         }
       }
@@ -100,7 +100,7 @@ void search_print(int x_cell, int y_cell)
           break;
         }
         else if(chess[y_change][x_change] == color && sum >= 2){
-          printf("(%d,%d)能下 %d 的子\n", x_change, y_change, color);
+          printf("(%d,%d)能下 color=%d 的子\n", x_change, y_change, color);
           break;
         }
       }
@@ -119,6 +119,7 @@ int main()
     print_color(x,y);
     if (!(chess[x][y] == 0))
     {
+      printf("(%d,%d)不能下 color=%d的子");
       break;
     }
 
