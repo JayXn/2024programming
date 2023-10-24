@@ -46,7 +46,7 @@ void search_print(int x_cell, int y_cell)
         int sum = 0;
         sum += 1;
 
-        if((i != 0) || j == 0){
+        if(i != 0 || j == 0){
           break;
         }
         else if(chess[y_change][x_change] == 0){
@@ -56,7 +56,49 @@ void search_print(int x_cell, int y_cell)
           break;
         }
         else if(chess[y_change][x_change] == color && sum >= 2){
-          printf("(%d,%d)能下 %d 的子", x_change, y_cell, color);
+          printf("(%d,%d)能下 %d 的子\n", x_change, y_change, color);
+          break;
+        }
+      }
+
+      while(y_change < 8, y_change >= 0){
+        y_change = y_change + i;
+        int sum = 0;
+        sum += 1;
+
+        if(i == 0 || j != 0){
+          break;
+        }
+        else if(chess[y_change][x_change] == 0){
+          break;
+        }
+        else if(chess[y_change][x_change] == color && sum < 2){
+          break;
+        }
+        else if(chess[y_change][x_change] == color && sum >= 2){
+          printf("(%d,%d)能下 %d 的子\n", x_change, y_change, color);
+          break;
+        }
+      }
+
+      while(x_change < 8, x_change >= 0, y_change < 8, y_change >= 0){
+        x_change = x_change + j;
+        y_change = y_change + i;
+
+        int sum = 0;
+        sum += 1;
+
+        if(i == 0 || j == 0){
+          break;
+        }
+        else if(chess[y_change][x_change] == 0){
+          break;
+        }
+        else if(chess[y_change][x_change] == color && sum < 2){
+          break;
+        }
+        else if(chess[y_change][x_change] == color && sum >= 2){
+          printf("(%d,%d)能下 %d 的子\n", x_change, y_change, color);
           break;
         }
       }
