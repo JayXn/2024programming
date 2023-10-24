@@ -6,6 +6,20 @@ int x, y;
 int color;
 int chess[CHESSSIZE][CHESSSIZE];
 
+void inputArray(int n)
+{
+  for (int i = 0; i < n; i++)
+  {
+    for (int j = 0; j < n; j++)
+    {
+      int piece;
+      scanf("%d", &piece);
+      chess[i][j] = piece;
+    }
+  }
+}
+
+
 void print_color(int x_cell, int y_cell)
 {
   if (chess[x_cell][y_cell] == 0)
@@ -22,18 +36,6 @@ void print_color(int x_cell, int y_cell)
   }
 }
 
-void inputArray()
-{
-  for (int i = 0; i < 8; i++)
-  {
-    for (int j = 0; j < 8; j++)
-    {
-      int piece;
-      scanf("%d", &piece);
-      chess[i][j] = piece;
-    }
-  }
-}
 
 void search_print(int x_cell, int y_cell)
 {
@@ -109,9 +111,9 @@ void search_print(int x_cell, int y_cell)
 
 int main()
 {
+  inputArray(8);
   while (1)
   {
-    inputArray();
     scanf("%d %d", &x, &y);
     scanf("%d", &color);
 
