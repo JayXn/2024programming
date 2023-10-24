@@ -112,9 +112,8 @@ void search_print(int x_cell, int y_cell)
 int main()
 {
   inputArray(8);
-  while (1)
+  while (scanf("%d %d", &x, &y) != EOF)
   {
-    scanf("%d %d", &x, &y);
     scanf("%d", &color);
 
     print_color(x,y);
