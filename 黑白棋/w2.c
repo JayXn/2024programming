@@ -1,6 +1,5 @@
 #include <stdio.h>
-#include <math.h>
-#define CHESSSIZE 8
+
 
 int x, y;
 int color;
@@ -16,7 +15,7 @@ int chess[8][8] = {
 };
 
 
-void print_color(int x_cell, int y_cell)
+int print_color(int x_cell, int y_cell)
 {
   if (chess[x_cell][y_cell] == 0)
   {
@@ -33,7 +32,7 @@ void print_color(int x_cell, int y_cell)
 }
 
 
-void SearchAndPrint(int x_cell, int y_cell)
+int SearchAndPrint(int x_cell, int y_cell)
 {
   int x_change = x_cell;
   int y_change = y_cell;
