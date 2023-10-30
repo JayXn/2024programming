@@ -1,21 +1,26 @@
 #include <stdio.h>
-#define IN_CHESS(x,y) (x >= 0 && x <= 7 && y >= 0 && y <= 7)    
+#include <math.h>
+#define CHESSSIZE 8
 
 int x, y;
 int color;
-int chess[8][8] = {
-  {0,0,0,0,0,0,0,0,},
-  {0,0,0,0,0,0,0,0,},
-  {0,0,0,0,0,0,0,0,},
-  {0,0,0,2,1,0,0,0,},
-  {0,0,0,1,2,0,0,0,},
-  {0,0,0,0,0,0,0,0,},
-  {0,0,0,0,0,0,0,0,},
-  {0,0,0,0,0,0,0,0,}
-};
+int chess[CHESSSIZE][CHESSSIZE];
+
+void inputArray(int n)
+{
+  for (int i = 0; i < n; i++)
+  {
+    for (int j = 0; j < n; j++)
+    {
+      int piece;
+      scanf("%d", &piece);
+      chess[i][j] = piece;
+    }
+  }
+}
 
 
-int print_color(int x_cell, int y_cell)
+void print_color(int x_cell, int y_cell)
 {
   if (chess[x_cell][y_cell] == 0)
   {
@@ -30,8 +35,6 @@ int print_color(int x_cell, int y_cell)
     printf("白色\n");
   }
 }
-
-
 
 
 int Search(int x_cell, int y_cell)
