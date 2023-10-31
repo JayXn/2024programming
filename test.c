@@ -1,44 +1,67 @@
 #include <stdio.h>
-#define IN_CHESS(x,y) (x >= 0 && x <= 7 && y >= 0 && y <= 7)    
+#include <math.h>
+#define CHESSSIZE 8
+#define SPACE 0
+#define BLACK 1
+#define WHITE 2
+#define IN_CHESS(x,y) (x >= 0 && x <= 7 && y >= 0 && y <= 7)  
 
-int x, y;
+int x, y, dx, dy;
 int color;
-int chess[8][8] = {
-  {0,0,0,0,0,0,0,0,},
-  {0,0,0,0,0,0,0,0,},
-  {0,0,0,0,0,0,0,0,},
-  {0,0,0,2,1,0,0,0,},
-  {0,0,0,1,2,0,0,0,},
-  {0,0,0,0,0,0,0,0,},
-  {0,0,0,0,0,0,0,0,},
-  {0,0,0,0,0,0,0,0,}
-};
+int chess[CHESSSIZE][CHESSSIZE];
+int CanPut[CHESSSIZE][CHESSSIZE];
 
 
-int print_color(int x_cell, int y_cell)
-{
-  if (chess[x_cell][y_cell] == 0)
-  {
-    printf("空白\n");
-  }
-  else if (chess[x_cell][y_cell] == 1)
-  {
-    printf("黑色\n");
-  }
-  else if (chess[x_cell][y_cell] == 2)
-  {
-    printf("白色\n");
+void Initial_CanPut(){
+for (int i = 0; i < CHESSSIZE; i++){
+    for (int j = 0; j < CHESSSIZE; j++){
+      CanPut[i][j] = 0;
+    }
   }
 }
 
-
-
-
-int Search(int x_cell, int y_cell)
+void inputArray(int n)
 {
+  int chess[8][8] = {
+    {0,0,0,0,0,0,0,0,},
+    {0,0,0,0,0,0,0,0,},
+    {0,0,0,0,0,0,0,0,},
+    {0,0,0,2,1,0,0,0,},
+    {0,0,0,1,2,0,0,0,},
+    {0,0,0,0,0,0,0,0,},
+    {0,0,0,0,0,0,0,0,},
+    {0,0,0,0,0,0,0,0,}
+  };
+  
+  for (int i = 0; i < n; i++){
+    for (int j = 0; j < n; j++){
+      CanPut[i][j] = 0;
+    }
+  }
+
+}
+
+
+void ShowCanPut(){
+  printf("可下的位子：\n");
+  for(int j = 0 ; j < CHESSSIZE ; j++){
+    for(int i = 0 ; i < CHESSSIZE ; i++){
+      if(CanPut[j][i] == 1){
+        printf("(%d, %d), ", i, j);
+      }
+    }
+  }
+  printf("\n");
+}
+
+void ShowStep(int x_cell, int y_cell, int x, int y){
+  !(x - x_cell == 0) ? printf("%d", x - x_cell) : printf("%d", y - y_cell);
+}
+
+
+int SearchAndRecord(int chess[8][8], int CanPut[8][8], int x_cell, int y_cell, int color){
   int x = x_cell;
   int y = y_cell;
-
   for(int dy = -1 ; dy <= 1 ; dy++ ){
     for(int dx = -1 ; dx <= 1 ; dx++){
       if(color != chess[y + dy][x + dx] && chess[y + dy][x + dx] != 0){
@@ -47,8 +70,9 @@ int Search(int x_cell, int y_cell)
         while(IN_CHESS(x,y)){
           x = x + dx;
           y = y + dy;
-          if(chess[x][y] == color){
-            return 1;
+          if(chess[y][x] == color){
+            CanPut[y][x] == 1;
+            break;
           }
         }
       }
@@ -57,25 +81,22 @@ int Search(int x_cell, int y_cell)
   return 0;
 }
 
-
-
-
-
 int main()
 {
-  while (scanf("%d %d", &x, &y) != EOF)
+  while (1)
   {
-    scanf("%d", &color);
+    inputArray(CHESSSIZE);
 
-    print_color(x,y);
-    
-    Search(x,y);
+    scanf("%d %d", &x, &y);
 
-    if(Search(x,y) == 1){
-      printf("(%d,%d)能下 color=%d 的值\n",x,y,color); 
-    }
-    else{
-      printf("(%d,%d)不能下 color=%d 的值\n",x,y,color); 
-    }
+    SearchAndRecord(chess, CanPut, x, y, BLACK);
+    printf("黑子");
+    ShowCanPut();
+    Initial_CanPut();
+
+    SearchAndRecord(chess, CanPut, x, y, WHITE);
+    printf("白子");
+    ShowCanPut();
+    Initial_CanPut();
   }
 }
