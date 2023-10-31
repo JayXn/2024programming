@@ -2,7 +2,7 @@
 #include <math.h>
 #define CHESSSIZE 8
 
-int x, y;
+int x, y, dx, dy;
 int color;
 int chess[CHESSSIZE][CHESSSIZE];
 
@@ -19,22 +19,6 @@ void inputArray(int n)
   }
 }
 
-
-void print_color(int x_cell, int y_cell)
-{
-  if (chess[x_cell][y_cell] == 0)
-  {
-    printf("空白\n");
-  }
-  else if (chess[x_cell][y_cell] == 1)
-  {
-    printf("黑色\n");
-  }
-  else if (chess[x_cell][y_cell] == 2)
-  {
-    printf("白色\n");
-  }
-}
 
 
 int Search(int x_cell, int y_cell)
@@ -66,15 +50,17 @@ int Search(int x_cell, int y_cell)
 
 int main()
 {
-  while (scanf("%d %d", &x, &y) != EOF)
-  {
-    scanf("%d", &color);
 
-    print_color(x,y);
-    
+
+  while (1)
+  {
+    inputArray(CHESSSIZE);
+
+    scanf("%d %d", &x, &y);
+
     Search(x,y);
 
-    if(Search(x,y) == 1){
+    if(Search(x,y) == 0){
       printf("(%d,%d)能下 color=%d 的值\n",x,y,color); 
     }
     else{
