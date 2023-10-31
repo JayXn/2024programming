@@ -53,6 +53,7 @@ int SearchAndRecord(int chess[8][8], int CanPut[8][8], int x_cell, int y_cell, i
           y = y + dy;
           if(chess[y][x] == color){
             CanPut[y][x] == 1;
+            break;
           }
         }
       }
@@ -73,6 +74,9 @@ void ShowCanPut(){
   printf("\n");
 }
 
+void ShowStep(int x_cell, int y_cell, int x, int y){
+  if(x_cell)
+}
 
 int main()
 {
