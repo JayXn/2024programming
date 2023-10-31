@@ -10,6 +10,16 @@ int x, y, dx, dy;
 int color;
 int chess[CHESSSIZE][CHESSSIZE];
 int CanPut[CHESSSIZE][CHESSSIZE];
+int chess[8][8] = {
+  {0,0,0,0,0,0,0,0,},
+  {0,0,0,0,0,0,0,0,},
+  {0,0,0,0,0,0,0,0,},
+  {0,0,0,2,1,0,0,0,},
+  {0,0,0,1,2,0,0,0,},
+  {0,0,0,0,0,0,0,0,},
+  {0,0,0,0,0,0,0,0,},
+  {0,0,0,0,0,0,0,0,}
+};
 
 
 void Initial_CanPut(){
@@ -18,27 +28,6 @@ for (int i = 0; i < CHESSSIZE; i++){
       CanPut[i][j] = 0;
     }
   }
-}
-
-void inputArray(int n)
-{
-  int chess[8][8] = {
-    {0,0,0,0,0,0,0,0,},
-    {0,0,0,0,0,0,0,0,},
-    {0,0,0,0,0,0,0,0,},
-    {0,0,0,2,1,0,0,0,},
-    {0,0,0,1,2,0,0,0,},
-    {0,0,0,0,0,0,0,0,},
-    {0,0,0,0,0,0,0,0,},
-    {0,0,0,0,0,0,0,0,}
-  };
-  
-  for (int i = 0; i < n; i++){
-    for (int j = 0; j < n; j++){
-      CanPut[i][j] = 0;
-    }
-  }
-
 }
 
 
@@ -55,7 +44,7 @@ void ShowCanPut(){
 }
 
 void ShowStep(int x_cell, int y_cell, int x, int y){
-  !(x - x_cell == 0) ? printf("%d", x - x_cell) : printf("%d", y - y_cell);
+  !(x - x_cell == 0) ? printf("%d\n", x - x_cell) : printf("%d\n", y - y_cell);
 }
 
 
@@ -72,6 +61,7 @@ int SearchAndRecord(int chess[8][8], int CanPut[8][8], int x_cell, int y_cell, i
           y = y + dy;
           if(chess[y][x] == color){
             CanPut[y][x] == 1;
+            ShowStep(x_cell, y_cell, x, y);
             break;
           }
         }
@@ -83,10 +73,7 @@ int SearchAndRecord(int chess[8][8], int CanPut[8][8], int x_cell, int y_cell, i
 
 int main()
 {
-  while (1)
-  {
-    inputArray(CHESSSIZE);
-
+  while (1){
     scanf("%d %d", &x, &y);
 
     SearchAndRecord(chess, CanPut, x, y, BLACK);
