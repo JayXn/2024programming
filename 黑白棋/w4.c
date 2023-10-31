@@ -20,7 +20,6 @@ for (int i = 0; i < CHESSSIZE; i++){
   }
 }
 
-
 void inputArray(int n)
 {
   for (int i = 0; i < n; i++)
@@ -39,6 +38,24 @@ void inputArray(int n)
   }
 
 }
+
+
+void ShowCanPut(){
+  printf("黑子可下的位子：\n");
+  for(int j = 0 ; j < CHESSSIZE ; j++){
+    for(int i = 0 ; i < CHESSSIZE ; i++){
+      if(CanPut[j][i] == 1){
+        printf("(%d, %d), ", i, j);
+      }
+    }
+  }
+  printf("\n");
+}
+
+void ShowStep(int x_cell, int y_cell, int x, int y){
+  !(x - x_cell == 0) ? printf("%d", x - x_cell) : printf("%d", y - y_cell);
+}
+
 
 int SearchAndRecord(int chess[8][8], int CanPut[8][8], int x_cell, int y_cell, int color){
   int x = x_cell;
@@ -60,22 +77,6 @@ int SearchAndRecord(int chess[8][8], int CanPut[8][8], int x_cell, int y_cell, i
     }
   }
   return 0;
-}
-
-void ShowCanPut(){
-  printf("黑子可下的位子：\n");
-  for(int j = 0 ; j < CHESSSIZE ; j++){
-    for(int i = 0 ; i < CHESSSIZE ; i++){
-      if(CanPut[j][i] == 1){
-        printf("(%d, %d), ", i, j);
-      }
-    }
-  }
-  printf("\n");
-}
-
-void ShowStep(int x_cell, int y_cell, int x, int y){
-  if(x_cell)
 }
 
 int main()
