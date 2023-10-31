@@ -22,17 +22,15 @@ for (int i = 0; i < CHESSSIZE; i++){
 
 void inputArray(int n)
 {
-  int chess[8][8] = {
-    {0,0,0,0,0,0,0,0,},
-    {0,0,0,0,0,0,0,0,},
-    {0,0,0,0,0,0,0,0,},
-    {0,0,0,2,1,0,0,0,},
-    {0,0,0,1,2,0,0,0,},
-    {0,0,0,0,0,0,0,0,},
-    {0,0,0,0,0,0,0,0,},
-    {0,0,0,0,0,0,0,0,}
-  };
-  
+  for (int i = 0; i < n; i++)
+  {
+    for (int j = 0; j < n; j++)
+    {
+      int piece;
+      scanf("%d", &piece);
+      chess[i][j] = piece;
+    }
+  }
   for (int i = 0; i < n; i++){
     for (int j = 0; j < n; j++){
       CanPut[i][j] = 0;
