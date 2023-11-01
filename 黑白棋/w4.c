@@ -48,10 +48,10 @@ void ShowStep(int x_cell, int y_cell, int x, int y){
 }
 
 
-int SearchAndRecord(int chess[8][8], int CanPut[8][8], int x_cell, int y_cell, int color){
+void SearchAndRecord(int chess[8][8], int CanPut[8][8], int x_cell, int y_cell, int color){
   int x = x_cell;
   int y = y_cell;
-  for(int dy = -1 ; dy <= 1 ; dy++ ){
+  for(int dy = -1 ; dy <= 1 ; dy++){
     for(int dx = -1 ; dx <= 1 ; dx++){
       if(color != chess[y + dy][x + dx] && chess[y + dy][x + dx] != 0){
         x = x + dx;
@@ -68,7 +68,6 @@ int SearchAndRecord(int chess[8][8], int CanPut[8][8], int x_cell, int y_cell, i
       }
     }
   }
-  return 0;
 }
 
 int main()

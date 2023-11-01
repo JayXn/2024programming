@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <math.h>
+#include <stdlib.h>
 #define CHESSSIZE 8
 #define SPACE 0
 #define BLACK 1
@@ -22,7 +22,7 @@ int chess[8][8] = {
 };
 
 
-void Initial_CanPut(){
+void Initial_CanPut(int CanPut[8][8]){
 for (int i = 0; i < CHESSSIZE; i++){
     for (int j = 0; j < CHESSSIZE; j++){
       CanPut[i][j] = 0;
@@ -31,27 +31,15 @@ for (int i = 0; i < CHESSSIZE; i++){
 }
 
 
-void ShowCanPut(){
-  printf("可下的位子：\n");
-  for(int j = 0 ; j < CHESSSIZE ; j++){
-    for(int i = 0 ; i < CHESSSIZE ; i++){
-      if(CanPut[j][i] == 1){
-        printf("(%d, %d), ", i, j);
-      }
-    }
-  }
-  printf("\n");
-}
-
 void ShowStep(int x_cell, int y_cell, int x, int y){
-  !(x - x_cell == 0) ? printf("%d\n", x - x_cell) : printf("%d\n", y - y_cell);
+  !(x - x_cell == 0) ? printf("%d\n", abs(x - x_cell)) : printf("%d\n", abs(y - y_cell));
 }
 
 
-int SearchAndRecord(int chess[8][8], int CanPut[8][8], int x_cell, int y_cell, int color){
+void SearchAndRecord(int chess[8][8], int CanPut[8][8], int x_cell, int y_cell, int color){
   int x = x_cell;
   int y = y_cell;
-  for(int dy = -1 ; dy <= 1 ; dy++ ){
+  for(int dy = -1 ; dy <= 1 ; dy++){
     for(int dx = -1 ; dx <= 1 ; dx++){
       if(color != chess[y + dy][x + dx] && chess[y + dy][x + dx] != 0){
         x = x + dx;
@@ -67,23 +55,38 @@ int SearchAndRecord(int chess[8][8], int CanPut[8][8], int x_cell, int y_cell, i
         }
       }
     }
-  }
-  return 0;
+  } 
 }
+
+
+void ShowCanPut(int CanPut[8][8]){
+  printf("可下的位子：\n");
+  for(int j = 0 ; j < CHESSSIZE ; j++){
+    for(int i = 0 ; i < CHESSSIZE ; i++){
+      if(CanPut[j][i] == 1){
+        printf("(%d, %d), ", i, j);
+      }
+    }
+  }
+  Initial_CanPut(CanPut);
+  printf("\n");
+}
+
 
 int main()
 {
   while (1){
     scanf("%d %d", &x, &y);
 
+    Initial_CanPut(CanPut);
     SearchAndRecord(chess, CanPut, x, y, BLACK);
     printf("黑子");
-    ShowCanPut();
-    Initial_CanPut();
+    ShowCanPut(CanPut);
 
     SearchAndRecord(chess, CanPut, x, y, WHITE);
     printf("白子");
-    ShowCanPut();
-    Initial_CanPut();
+    ShowCanPut(CanPut);
+
+
   }
 }
