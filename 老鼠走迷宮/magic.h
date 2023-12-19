@@ -25,9 +25,9 @@ typedef struct stack{
     //struct axis1 *next;
 //} stackP_t;
 
-stackP_t *stack;
+//stackP_t * stack;
 
-void push(stack_t *stack, axis_t axis);
+int push(stack_t *stack, axis_t axis);
 axis_t pop(stack_t *stack);
 
 #endif
