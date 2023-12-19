@@ -3,7 +3,7 @@
 #include "magic.h"
 
 
-char mesh[9][9] = {
+char mesh[10][10] = {
   { 1,1,1,1,1,1,1,1,1,1 },
   { 0,0,0,1,1,0,1,1,0,1 },
   { 1,0,1,1,0,0,0,0,0,1 },
@@ -15,7 +15,7 @@ char mesh[9][9] = {
   { 1,0,0,0,1,0,0,0,1,1 },
   { 1,1,1,1,1,1,1,1,1,1 }
 };
-char mark[9][9] = {0};
+char mark[10][10] = {0};
 
 
 axis_t findMove(stack_t *stackPtr , axis_t position){
