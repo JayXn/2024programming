@@ -1,4 +1,4 @@
-#ifndef _MAGIC_H_
+#ifndef _MAGIC_H_   //避免拷貝二份
 #define _MAGIC_H_
 
 #define M_SIZE 10
