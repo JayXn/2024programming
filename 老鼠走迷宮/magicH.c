@@ -34,6 +34,7 @@ axis_t findMove(stack_t *stackPtr , axis_t position){
       }
     }
   }
+  return pop(stackPtr);
 }
 
 
@@ -49,9 +50,11 @@ int main(){
   mark[current_position.x][current_position.y] = '*';
 
   while(!EQU(current_position, out)){
-    current_position = findMove(&myStack , current_position);
+    current_position = findMove(&myStack ,current_position);
+    if(EQU(current_position , no_exit)){
+      printf("no Exit axis!!\n");
+      break;
+    }
+    printf("move to %d, %d\n", current_position.x , current_position.y);
   }
-
-
-
 }
