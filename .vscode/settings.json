@@ -3,5 +3,6 @@
     "test1": "c",
     "math.h": "c",
     "stdio.h": "c"
-  }
+  },
+  "terminal.explorerKind": "integrated"
 }
