@@ -4,6 +4,7 @@
 //头文件：<stdio.h> 
 //用法:  int fprintf(FILE *stream, char *format[, argument,...]);
 //功能:   格式化输出到一个流中,照原样抄写格式串format的内容到流stream中，每遇到一个%，就按规定的格式，依次输出一个表达式argument的值到流stream中;
+
 //参数： FILE *stream   为要输出的流，char *format[, argument,...]  要输出的格式，为可变参数  
 //返回值： 成功   返回写的字符个数 ，失败   返回EOF。
 

@@ -2,15 +2,12 @@
 
 //函数名: fscanf 
 //头文件：<stdio.h> 
-//用法:  char *fgets(char *s, int n, FILE *stream); 
-//功能:  从流中读取一字符串 
-//参数：  char *s        保存读取数据的字符串 
-        //int n          读n-1个字符; 
-        //FILE *stream   要获取字符串的文件流 
-//返回值： 成功    s所指的字符串 ，失败   出错或遇到文件结束返回NULL 
-//补充：从流stream读n-1个字符，或遇换行符'\n'为止，把读出的内容，存入s中。与gets不同，fgets在s未尾保留换行符。
-
-// 获取文件流的n-1个字符串，并将结果输出
+//用法:  int fscanf(FILE *stream, char *format[,argument...]);
+//功能:  一个流中执行格式化输入,fscanf扫描输入字段，从流stream读入，每读入一个字段，就依次按照由format所指的格式串中取一个从%开始的格式进行格式化之后存入对应的一个地址address中。 
+//参数：FILE *stream  输入数据的流           
+      //char *format[,argument...]  指定的字符串格式
+//返回值： 成功  返回转换和存贮输入字段的个数 ，失败  遇文件结束返回EOF。
+//程序例: 从屏幕输入整数，并输出提示
 
 #include<stdio.h>
  
@@ -18,29 +15,26 @@
  
 int main(void){
  
-   FILE *stream;
+   int i;
  
-   char string[] = "This is a test";
+   printf("Input an integer: ");
  
-   char msg[20]={"\0"};
+   if (fscanf(stdin, "%d", &i)){
  
-   stream = fopen("1.txt", "w+");  
+      printf("The integer read was: %i\n",i);
  
-   fwrite(string, strlen(string), 1, stream);  //将字符串写入文件中
+   }else{
  
-   fseek(stream, 0, SEEK_SET);  //将文件的句柄定位到文件头部
+      fprintf(stderr, "Error reading an integer from stdin.\n");
  
-   fgets(msg, strlen(string)+1, stream); 
+      exit(1);
  
-//从文件流中获取字符串，并将读取的字符串保留在msg中
- 
-   printf("%s\n", msg);
- 
-   fclose(stream);
+   }
  
    return 0;
  
 }
 
 // 运行结果
-//This is a test
+//Input an integer: 123
+//The integer read was: 123

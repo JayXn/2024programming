@@ -36,6 +36,7 @@ int main() {
     char start[] = "1";
 
     generateLookAndSay(start, N);
+    
     return 0;
 }
 
