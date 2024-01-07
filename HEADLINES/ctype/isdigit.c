@@ -1,31 +1,29 @@
-///https://tw.gitbook.net/c_standard_library/c_function_isdigit.html//
-//example：int isdigit(int c)       該函數是否傳遞的字符是十進製數字。
+/*======https://www.dotcpp.com/course/437======*/
 
+// 函数名: isdigit
+// 头文件：<ctype.h>
+// 函数原型: int isdigit(int ch);
+// 功能: 判断字符是否为十进制数字
+// 参数: int ch 待检查的字符
+// 返回值: ch不是十进制数字 返回0 , ch是十进制数字 返回非0
 
-#include <stdio.h>
+// 程序例： 判断输入的字符是否为十进制数字
 #include <ctype.h>
+#include <stdio.h>
 
-int main()
-{
-   int var1 = 'h';
-   int var2 = '2';
-    
-   if( isdigit(var1) )
-   {
-      printf("var1 = |%c| is a digit", var1 );
-   }
-   else
-   {
-      printf("var1 = |%c| is not a digit", var1 );
-   }
-   if( isdigit(var2) )
-   {
-      printf("var2 = |%c| is a digit", var2 );
-   }
-   else
-   {
-      printf("var2 = |%c| is not a digit", var2 );
-   }
-  
-   return(0);
+int main() {
+   char ch;
+   printf("input a character:");
+   scanf("%c", &ch);
+   if (isdigit(ch)) {
+      printf("%c is digit.", ch);
+   } else {
+      printf("%c is not digit.", ch);
+   } 
+   putchar('\n');   
+   return 0;  
 }
+
+// 运行结果:
+// input a character:5
+// 5 is digit.

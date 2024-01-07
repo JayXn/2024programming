@@ -1,41 +1,29 @@
+/*======https://www.dotcpp.com/course/439======*/
 
-//https://tw.gitbook.net/c_standard_library/c_function_islower.html//
-//example：int islower(int c)       該函數檢查傳遞的字符是否是小寫字母。
+// 函数名: islower
+// 头文件：<ctype.h>
+// 函数原型: int islower(int ch);
+// 功能: 判断字符是否为小写英文字母
+// 参数: int ch 待检查的字符
+// 返回值: ch不是小写英文字母 返回0 ,  ch是小写英文字母 返回非0
 
-
-#include <stdio.h>
+// 程序例：判断输入的字符是否为小写英文字母
 #include <ctype.h>
+#include <stdio.h>
 
-int main()
-{
-   int var1 = 'Q';
-   int var2 = 'q';
-   int var3 = '3';
-    
-   if( islower(var1) )
-   {
-       printf("var1 = |%c| is lowercase character", var1 );
-   }
-   else
-   {
-      printf("var1 = |%c| is not lowercase character", var1 );
-   }
-   if( islower(var2) )
-   {
-       printf("var2 = |%c| is lowercase character", var2 );
-   }
-   else
-   {
-      printf("var2 = |%c| is not lowercase character", var2 );
-   }
-   if( islower(var3) )
-   {
-       printf("var3 = |%c| is lowercase character", var3 );
-   }
-   else
-   {
-      printf("var3 = |%c| is not lowercase character", var3 );
-   }
-   
-   return(0);
+int main() {
+   char ch;
+   printf("input a character:");
+   scanf("%c", &ch);
+   if (islower(ch)) {
+      printf("%c is lower alpha.", ch);
+   } else {
+      printf("%c is not lower alpha.", ch);
+   } 
+   putchar('\n');   
+   return 0;  
 }
+
+// 运行结果：
+// input a character:g
+// g is lower alpha.

@@ -1,40 +1,29 @@
-//https://tw.gitbook.net/c_standard_library/c_function_isupper.html//
-//example：int isupper(int c)       該函數檢查傳遞的字符是否是大寫字母。
+/*======https://www.dotcpp.com/course/444======*/
 
+// 函数名: isupper
+// 头文件：<ctype.h>
+// 函数原型: int isupper(int ch);
+// 功能: 判断字符是否为大写英文字母
+// 参数: int ch 待检查的字符
+// 返回值: ch不是大写英文字母 返回0 ，ch是大写英文字母 返回非0
 
-#include <stdio.h>
+// 程序例： 判断输入的字符是否为大写英文字母
 #include <ctype.h>
+#include <stdio.h>
 
-int main()
-{
-   int var1 = 'M';
-   int var2 = 'm';
-   int var3 = '3';
-    
-   if( isupper(var1) )
-   {
-      printf("var1 = |%c| is uppercase character", var1 );
-   }
-   else
-   {
-      printf("var1 = |%c| is not uppercase character", var1 );
-   }
-   if( isupper(var2) )
-   {
-      printf("var2 = |%c| is uppercase character", var2 );
-   }
-   else
-   {
-      printf("var2 = |%c| is not uppercase character", var2 );
-   }   
-   if( isupper(var3) )
-   {
-      printf("var3 = |%c| is uppercase character", var3 );
-   }
-   else
-   {
-      printf("var3 = |%c| is not uppercase character", var3 );
-   }
-   
-   return(0);
+int main() {
+   char ch;
+   printf("input a character:");
+   scanf("%c", &ch);
+   if (isupper(ch)) {
+      printf("%c is upper.", ch);
+   } else {
+      printf("%c is not upper.", ch);
+   } 
+   putchar('\n');   
+   return 0;  
 }
+
+// 运行结果
+// input a character:G 
+// G is upper.

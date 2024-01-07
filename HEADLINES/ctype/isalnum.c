@@ -1,49 +1,29 @@
-/*https://tw.gitbook.net/c_standard_library/ctype_h.html*/
+/*======https://www.dotcpp.com/course/434======*/
 
-//example：int isalnum(int c);      檢查是否為數字或字母
-int main()
-{
-   int var1 = 'd';
-   int var2 = '2';
-   int var3 = '	';
-    
-   if( isalnum(var1) )
-   {
-      printf("var1 = |%c| is alphanumeric", var1 );
-   }
-   else
-   {
-      printf("var1 = |%c| is not alphanumeric", var1 );
-   }
-   if( isalnum(var2) )
-   {
-      printf("var2 = |%c| is alphanumeric", var2 );
-   }
-   else
-   {
-      printf("var2 = |%c| is not alphanumeric", var2 );
-   }
-   if( isalnum(var3) )
-   {
-      printf("var3 = |%c| is alphanumeric", var3 );
-   }
-   else
-   {
-      printf("var3 = |%c| is not alphanumeric", var3 );
-   }
-   return(0);
+// 函数名: isalnum
+// 头文件：<ctype.h>
+// 函数原型: int isalnum(int ch);
+// 功能: 判断字符是否为字母或数字
+// 参数: int ch 待检查的字符
+// 返回值: ch不是字母或数字 返回0 ，ch是字母或数字 返回非0
+
+// 程序例：判断输入的字符是否为字母或数字
+#include <ctype.h>
+#include <stdio.h>
+
+int main() {
+   char ch;
+   printf("input a character:");
+   scanf("%c", &ch);
+   if (isalnum(ch)) {
+      printf("%c is alnum.", ch);
+   } else {
+      printf("%c is not alnum.", ch);
+   } 
+   putchar('\n');
+   return 0;  
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+// 运行结果：
+// input a character:f
+// f is alnum.

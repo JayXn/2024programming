@@ -1,49 +1,30 @@
-//==========https://tw.gitbook.net/c_standard_library/c_function_isalpha.html==========//
-//example：int isalpha(int c);      檢查是否為字母
+/*======https://www.dotcpp.com/course/435======*/
 
+// 函数名: isalpha
+// 头文件：<ctype.h>
+// 函数原型: int isalpha(int ch);
+// 功能: 判断字符是否为英文字母
+// 参数: int ch 待检查的字符
+// 返回值: ch不是英文字母 返回0 ，ch是英文字母 返回非0
 
-#include <stdio.h>
+// 程序例：判断输入的字符是否为英文字母
 #include <ctype.h>
+#include <stdio.h>
 
-int main()
-{
-   int var1 = 'd';
-   int var2 = '2';
-   int var3 = '	';
-   int var4 = ' ';
-    
-   if( isalpha(var1) )
-   {
-      printf("var1 = |%c| is an alphabet", var1 );
-   }
-   else
-   {
-      printf("var1 = |%c| is not an alphabet", var1 );
-   }
-   if( isalpha(var2) )
-   {
-      printf("var2 = |%c| is an alphabet", var2 );
-   }
-   else
-   {
-      printf("var2 = |%c| is not an alphabet", var2 );
-   }
-   if( isalpha(var3) )
-   {
-      printf("var3 = |%c| is an alphabet", var3 );
-   }
-   else
-   {
-      printf("var3 = |%c| is not an alphabet", var3 );
-   }
-   if( isalpha(var4) )
-   {
-      printf("var4 = |%c| is an alphabet", var4 );
-   }
-   else
-   {
-      printf("var4 = |%c| is not an alphabet", var4 );
-   }
-   
-   return(0);
+int main() {
+   char ch;
+   printf("input a character:");
+   scanf("%c", &ch);
+   if (isalpha(ch)) {
+      printf("%c is alpha.", ch);
+   } else {
+      printf("%c is not alpha.", ch);
+   } 
+   putchar('\n');   
+   return 0;  
 }
+
+// 运行结果:
+// input a character:f
+// f is alpha.
+
