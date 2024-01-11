@@ -1,9 +1,0 @@
-{
-  "files.associations": {
-    "test1": "c",
-    "math.h": "c",
-    "stdio.h": "c",
-    "string.h": "c"
-  },
-  "terminal.explorerKind": "integrated"
-}
