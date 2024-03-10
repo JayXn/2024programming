@@ -1,5 +1,6 @@
 {
   "version": "0.2.0",
+  
   "configurations": [
     {
       "name": "(gdb) Launch",
@@ -10,7 +11,7 @@
       "stopAtEntry": false,
       "cwd": "${fileDirname}",
       "environment": [],
-      "externalConsole": false,
+      "externalConsole": true,
       "MIMode": "gdb",
       "miDebuggerPath": "/path/to/gdb",
       "setupCommands": [
@@ -35,7 +36,7 @@
       "stopAtEntry": false,
       "cwd": "C:\\msys64\\ucrt64\\bin",
       "environment": [],
-      "externalConsole": false,
+      "externalConsole": true,
       "MIMode": "gdb",
       "miDebuggerPath": "gdb.exe",
       "setupCommands": [
