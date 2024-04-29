@@ -3,7 +3,7 @@ using namespace std;
 
 class A {
 public:
-   void foo() {
+  void foo() {
     cout << "A" << endl;
   }
 };
