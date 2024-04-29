@@ -1,93 +1,98 @@
-#include <algorithm>
+//另解:物件導向寫法
 #include <iostream>
-#include <string>
 #include <vector>
+#include <utility>
+#include <cstring>
+#include <stack>
 
 using namespace std;
 
-class Fraction {
- public:
-  Fraction() : numerator(0), denominator(1) {}
-  Fraction(int n, int m) : numerator(n) {
-    if (m == 0)
-      throw "divided by zero";
-    denominator = m;
-  }
-  int getNumerator() const {
-    return numerator;
-  }
-  int getDenominator() const {
-    return denominator;
-  }
-  void setNumerator(int n) {
-    numerator = n;
-  }
-  void setDenominator(int m) {
-    if (m == 0)
-      throw "divided by zero";
-    denominator = m;
-  }
+class Maze {
+private:
+    char maze[1000][1000];
+    stack<pair<int, int>> p;
 
+public:
+    Maze() {
+        memset(maze, ' ', sizeof(maze));
+    }
 
-  friend std::ostream& operator<<(std::ostream& cout, const Fraction& f) {
-    if (f.denominator != 1) {
-      if (f.numerator == 0) {
-        cout << 0;
-        return cout;
-      }
-      cout << "[" << f.numerator << "/" << f.denominator << "]";
-    } else
-      cout << f.numerator;
-    return cout;
-  }
+    void createGrid(int M, int N) {
+        for (int i = 0; i < (N * 2) + 1; ++i)
+            maze[0][i] = (i % 2 == 1 ? '_' : ' ');
+        maze[0][N*2] = '\0';
+        for (int j = 1; j < M + 1; ++j) {
+            for (int k = 0; k < (N * 2) + 1; ++k)
+                maze[j][k] = (k % 2 == 0 ? '|' : '_');
+        }
+    }
 
- private:
-  int numerator, denominator;
+    void move(char cmd, int& checkX, int& checkY, int& count) {
+        if (cmd == 'U') {
+            maze[--checkX][checkY] = ' ';
+            p.push({checkX, checkY});
+            ++count;
+        }
+        else if (cmd == 'D') {
+            maze[checkX][checkY] = ' ';
+            p.push({checkX, checkY});
+            ++checkX;
+            ++count;
+        }
+        else if (cmd == 'L') {
+            maze[checkX][--checkY] = ' ';
+            --checkY;
+            p.push({checkX, checkY});
+            ++count;
+        }
+        else if (cmd == 'R') {
+            maze[checkX][++checkY] = ' ';
+            ++checkY;
+            p.push({checkX, checkY});
+            ++count;
+        }
+        else {
+            int num;
+            cin >> num;
+            for (int i = 1; i <= num; ++i) p.pop();
+            checkX = p.top().first, checkY = p.top().second;
+        }
+    }
+
+    void printMaze(int M, int N) {
+        for (int i = 0; i < M + 1; ++i) {
+            for (int j = 0; j < (N * 2) + 1; ++j) {
+                if (i == 0 && j == N * 2) continue;
+                else cout << maze[i][j];
+            }
+            cout << endl;
+        }
+    }
 };
 
-//計算最大公因數
-int getGCD(int a, int b) { 
-  while (b != 0) {
-    int temp = a % b;
-    a = b;
-    b = temp;
-  }
-  return a;
-}
-
-// 約分函式
-Fraction simplify(const Fraction &f) {
-  int n = f.getNumerator();
-  int m = f.getDenominator();
-  int gcd = getGCD(n , m);
-  n /= gcd;
-  m /= gcd;
-  return Fraction(n, m);
-}
-
-Fraction operator+(const Fraction& f1, const Fraction& f2) {
-  int n = f1.getNumerator() * f2.getDenominator() + f2.getNumerator() * f1.getDenominator();
-  int m = f1.getDenominator() * f2.getDenominator();
-  return simplify(Fraction(n, m));
-}
-
-Fraction operator-(const Fraction& f1, const Fraction& f2) {
-  int n = f1.getNumerator() * f2.getDenominator() - f2.getNumerator() * f1.getDenominator();
-  int m = f1.getDenominator() * f2.getDenominator();
-  return simplify(Fraction(n, m));
-}
-
-bool operator==(const Fraction& f1, const Fraction& f2) { //通分比較
-  return f1.getNumerator() * f2.getDenominator() == f2.getNumerator() * f1.getDenominator();
-}
-
-
-
 int main() {
-  int n1, n2, m1, m2;
-  cin >> n1 >> m1 >> n2 >> m2;
-  Fraction f1(n1, m1), f2(n2, m2);
-  cout << (f1 + f2) << endl;
-  cout << (f1 - f2) << endl;
-  cout << (f1 == f2) << endl;
+    int t;
+    cin >> t;
+
+    while (t--) {
+        Maze maze;
+        int M, N, x, y;
+        cin >> M >> N >> x >> y;
+        maze.createGrid(M, N);
+
+        int checkX = (M+1) - x, checkY = y;
+        int count = 2;
+        char cmd;
+        while (cin >> cmd && count < M * N) {
+            maze.move(cmd, checkX, checkY, count);
+        }
+
+        if (cmd == 'U') maze.move('U', checkX, checkY, count);
+        else if (cmd == 'D') maze.move('D', checkX, checkY, count);
+        else if (cmd == 'L') maze.move('L', checkX, checkY, count);
+        else if (cmd == 'R') maze.move('R', checkX, checkY, count);
+
+        maze.printMaze(M, N);
+        cout << endl;
+    }
 }
