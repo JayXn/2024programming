@@ -1,98 +1,80 @@
-//另解:物件導向寫法
 #include <iostream>
+#include <string>
 #include <vector>
-#include <utility>
-#include <cstring>
-#include <stack>
+#include <algorithm>
 
 using namespace std;
 
-class Maze {
-private:
-    char maze[1000][1000];
-    stack<pair<int, int>> p;
-
+class PokerCard
+{
 public:
-    Maze() {
-        memset(maze, ' ', sizeof(maze));
+    PokerCard(string s, int f)
+    {
+        suit = s;
+        face = f;
+    }
+    friend ostream &operator<<(ostream &out, const PokerCard &p)
+    {
+        out<<"["<<p.face<<" of "<<p.suit<<"]";
+        return out;
     }
 
-    void createGrid(int M, int N) {
-        for (int i = 0; i < (N * 2) + 1; ++i)
-            maze[0][i] = (i % 2 == 1 ? '_' : ' ');
-        maze[0][N*2] = '\0';
-        for (int j = 1; j < M + 1; ++j) {
-            for (int k = 0; k < (N * 2) + 1; ++k)
-                maze[j][k] = (k % 2 == 0 ? '|' : '_');
+    //Please finish the comparison operator override
+    //compare face first, if the same then compare suit 
+    //請完成比較運算子多載
+    //先比較 face ， face 一樣再比較 suit
+    //1 > 13 > 12 > 11 > 10 > 9 > 8 > 7 > 6 > 5 > 4 > 3 > 2
+    //spade > heart > diamond > club
+    bool operator>(PokerCard& b) {
+        if (face == 1 || b.face == 1) {
+            if (face == b.face && suit[0] > b.suit[0]) return true;
+            return face == 1 && b.face != 1;
+        } 
+        else if (face > b.face) {
+            return true;
+        } 
+        else if (face == b.face && suit[0] > b.suit[0]) {
+            return true;
         }
+        return false;
     }
 
-    void move(char cmd, int& checkX, int& checkY, int& count) {
-        if (cmd == 'U') {
-            maze[--checkX][checkY] = ' ';
-            p.push({checkX, checkY});
-            ++count;
-        }
-        else if (cmd == 'D') {
-            maze[checkX][checkY] = ' ';
-            p.push({checkX, checkY});
-            ++checkX;
-            ++count;
-        }
-        else if (cmd == 'L') {
-            maze[checkX][--checkY] = ' ';
-            --checkY;
-            p.push({checkX, checkY});
-            ++count;
-        }
-        else if (cmd == 'R') {
-            maze[checkX][++checkY] = ' ';
-            ++checkY;
-            p.push({checkX, checkY});
-            ++count;
-        }
-        else {
-            int num;
-            cin >> num;
-            for (int i = 1; i <= num; ++i) p.pop();
-            checkX = p.top().first, checkY = p.top().second;
-        }
+    bool operator==(PokerCard &b){
+        return (face == b.face && suit == b.suit);
     }
 
-    void printMaze(int M, int N) {
-        for (int i = 0; i < M + 1; ++i) {
-            for (int j = 0; j < (N * 2) + 1; ++j) {
-                if (i == 0 && j == N * 2) continue;
-                else cout << maze[i][j];
-            }
-            cout << endl;
-        }
+    bool operator<(PokerCard &b){
+        return !(*this > b) && !(*this == b);
     }
+
+private:
+    string suit;
+    int face;
 };
 
 int main() {
-    int t;
-    cin >> t;
+    // 建立一些撲克牌物件
+    PokerCard card1("spade", 7);
+    PokerCard card2("heart", 10);
+    PokerCard card3("club", 2);
+    PokerCard card4("diamond", 13);
+    PokerCard card5("spade", 7);
 
-    while (t--) {
-        Maze maze;
-        int M, N, x, y;
-        cin >> M >> N >> x >> y;
-        maze.createGrid(M, N);
+    // 使用比較運算子來比較撲克牌
+    cout << "card1 > card2: " << (card1 > card2) << endl;
+    cout << "card3 < card4: " << (card3 < card4) << endl;
+    cout << "card1 == card5: " << (card1 == card5) << endl;
 
-        int checkX = (M+1) - x, checkY = y;
-        int count = 2;
-        char cmd;
-        while (cin >> cmd && count < M * N) {
-            maze.move(cmd, checkX, checkY, count);
-        }
+    // 建立一個撲克牌容器
+    vector<PokerCard> deck = {card1, card2, card3, card4, card5};
 
-        if (cmd == 'U') maze.move('U', checkX, checkY, count);
-        else if (cmd == 'D') maze.move('D', checkX, checkY, count);
-        else if (cmd == 'L') maze.move('L', checkX, checkY, count);
-        else if (cmd == 'R') maze.move('R', checkX, checkY, count);
-
-        maze.printMaze(M, N);
-        cout << endl;
+    // 使用比較運算子排序撲克牌
+    sort(deck.begin(), deck.end());  // 需要引入 <algorithm> 標頭檔案
+    cout << "Sorted deck:" << endl;
+    for (const auto &card : deck) {
+        cout << card << " ";
     }
+    cout << endl;
+
+    return 0;
 }
