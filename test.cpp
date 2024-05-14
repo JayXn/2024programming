@@ -1,80 +1,165 @@
 #include <iostream>
 #include <string>
-#include <vector>
 #include <algorithm>
 
 using namespace std;
 
-class PokerCard
-{
-public:
-    PokerCard(string s, int f)
-    {
-        suit = s;
-        face = f;
-    }
-    friend ostream &operator<<(ostream &out, const PokerCard &p)
-    {
-        out<<"["<<p.face<<" of "<<p.suit<<"]";
-        return out;
+class LinkedList {
+  public:
+    LinkedList():head(nullptr){}
+    ~LinkedList() {
+      Node* current = head;
+      while (current) {
+          Node* next = current->getNext();
+          delete current;
+          current = next;
+      }
     }
 
-    //Please finish the comparison operator override
-    //compare face first, if the same then compare suit 
-    //請完成比較運算子多載
-    //先比較 face ， face 一樣再比較 suit
-    //1 > 13 > 12 > 11 > 10 > 9 > 8 > 7 > 6 > 5 > 4 > 3 > 2
-    //spade > heart > diamond > club
-    bool operator>(PokerCard& b) {
-        if (face == 1 || b.face == 1) {
-            if (face == b.face && suit[0] > b.suit[0]) return true;
-            return face == 1 && b.face != 1;
-        } 
-        else if (face > b.face) {
-            return true;
-        } 
-        else if (face == b.face && suit[0] > b.suit[0]) {
-            return true;
+  public:
+    class Node {
+    public:
+       Node(): next(nullptr), data(0) {}
+       Node(int d): next(nullptr), data(d) {}
+       Node(Node* n): next(n), data(0) {}
+       Node(Node* n, int d): next(n), data(d) {}
+       int data;
+       Node* next;
+
+    public:
+      Node *&getNext(){
+        return next;
+      }
+      int &getData(){
+        return data;
+      }
+    };
+
+    class iterator {
+    public:
+      Node * it;
+      iterator(Node * p) : it(p) {}
+
+      iterator &operator++(){
+        it = it -> getNext();
+        return *this;
+      }
+      bool operator==(iterator i){
+        return it == i.it;
+      }
+      bool operator!=(iterator i){
+        return it != i.it;
+      }
+      int &operator*(){
+        return it->getData();
+      }
+    };
+
+    iterator begin(){
+      return iterator(head);
+    }
+    iterator end(){
+      return iterator(NULL);
+    }
+
+    bool addFromHead(int d) {
+      Node *newnode = new Node(d);
+      newnode -> next = head;
+      head = newnode;
+      return true;
+    }
+    bool addFromTail(int d) {
+      Node *newnode = new Node(d);
+      if(!head){
+        head = newnode;
+        return true;
+      }
+      else{
+        Node *temp = head;
+        while(temp -> getNext()){
+          temp = temp -> getNext();
         }
+        temp -> getNext() = newnode;
+        return true;
+      }
+      return false;
+    }
+    bool removeFromHead() {
+      if(!head){
         return false;
+      }
+      Node *temp = head;
+      head = head -> getNext();
+      delete temp;
+      return true;
+    }
+    bool removeFromTail() {
+      if(!head){
+        return false;
+      }
+      if(head -> getNext() == nullptr){
+         delete head;
+         head = nullptr;
+         return true;
+      }
+      Node *temp = head;
+      while(temp -> getNext() -> getNext()){
+        temp = temp -> getNext();
+      }
+      delete temp -> getNext();
+      temp -> next = nullptr;
+      return true;
     }
 
-    bool operator==(PokerCard &b){
-        return (face == b.face && suit == b.suit);
+    size_t getSize() const {
+      size_t size = 0;
+      Node * temp = head;
+      while(temp){
+        size++;
+        temp = temp -> getNext();
+      }
+      return size;
     }
-
-    bool operator<(PokerCard &b){
-        return !(*this > b) && !(*this == b);
+   
+    friend ostream& operator<<(ostream& o, LinkedList *l) {
+      size_t size = l -> getSize();
+      int output_times = 0;
+      if(size == 0){
+        cout << "{}" << endl;
+        return o;
+      }
+      if(size == 1){
+        cout << "{" << l->head->data << "}" << endl;
+        return o;
+      }
+      cout << "{";
+      for_each(l -> begin() , l -> end() , 
+        [&output_times , &size](int j){
+          if(output_times == size-1){
+            cout << j;
+          }
+          else{
+            cout << j << ", ";
+            output_times++;
+          }
+      });
+      cout << "}" << endl;
+      return o;
     }
-
-private:
-    string suit;
-    int face;
+  
+   protected:
+    Node* head;
 };
 
 int main() {
-    // 建立一些撲克牌物件
-    PokerCard card1("spade", 7);
-    PokerCard card2("heart", 10);
-    PokerCard card3("club", 2);
-    PokerCard card4("diamond", 13);
-    PokerCard card5("spade", 7);
-
-    // 使用比較運算子來比較撲克牌
-    cout << "card1 > card2: " << (card1 > card2) << endl;
-    cout << "card3 < card4: " << (card3 < card4) << endl;
-    cout << "card1 == card5: " << (card1 == card5) << endl;
-
-    // 建立一個撲克牌容器
-    vector<PokerCard> deck = {card1, card2, card3, card4, card5};
-
-    // 使用比較運算子排序撲克牌
-    sort(deck.begin(), deck.end());  // 需要引入 <algorithm> 標頭檔案
-    cout << "Sorted deck:" << endl;
-    for (const auto &card : deck) {
-        cout << card << " ";
-    }
-    cout << endl;
+    LinkedList *list = new LinkedList();
+    list->addFromHead(5);
+    list->addFromHead(1);
+    list->addFromHead(2);
+    list->addFromTail(9);
+    list->addFromTail(9);
+    list->addFromTail(9);
+    cout << list << endl;
 
     return 0;
 }
