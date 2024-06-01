@@ -1,104 +1,72 @@
-#include <iostream>
-#include <string>
-#include <algorithm>
-#include <vector>
 #include <cmath>
+#include <iomanip>
+#include <iostream>
+#include <cstdio>
 
 using namespace std;
 
-class Point{
-private:
-  float x;
-  float y;
+class Point {
+ public:
+  double x;
+  double y;
 
-public:
-  Point(): x(0), y(0){};
-  Point(float a, float b) : x(a), y(b){};
-
-  void printPoint() {
-    cout << "(" << x << ", " << y << ")" << endl;
-  }
-  float getX(){
-    return x;
-  }
-  float setX(float c){
-    x = c;
-    return x;
-  }
-  float getY(){
-    return y;
-  }
-  float setY(float d){
-    y = d;
-    return y;
-  }
-  float getDistance(Point p){
-    return sqrt(pow(x - p.x, 2) + pow(y - p.y, 2));
-  }
+  Point(): x(0), y(0) {}
+  Point(double x, double y): x(x), y(y) {}
 };
 
+class HillClimb {
+ public:
+  void processTestCase() {
+    int number;
+    cin >> number;
 
-class Segment{
-  public:
-  	Point p1;
-  	Point p2;
-  public:
-  	Segment(){
-      p1.setX(0);
-      p1.setY(0);
-      p2.setX(0);
-      p2.setY(0);
+    Point* points = new Point[number];
+
+    for (int i = 0; i < number; i++) {
+      double x, y;
+      cin >> x >> y;
+      points[i] = Point(x, y);
     }
-  	Segment(Point _p1,Point _p2){
-      p1 = _p1;
-      p2 = _p2;
-    }
-    float getLength(){
-      return p1.getDistance(p2);
-    }
-};
 
-
-class Shape{
-private:
-  Segment seg[10];
-  int edgeCount;
-
-public:
-  Shape() : edgeCount(0){};
-  virtual float getArea() = 0;
-  Shape(Segment* s, int n) {
-      for (int i = 0; i < n - 1; i++) {
-        if ((s[i].p2.getX() != s[i + 1].p1.getX() || s[i].p2.getY() != s[i + 1].p1.getY())) {
-          throw invalid_argument("shape is not closed");
+    for (int i = number - 1; i > 0; i--) {  // 依照 x 座標遞減排序
+      for (int j = 0; j < i; j++) {
+        if (points[j].x < points[j + 1].x) {
+          Point temp = points[j];
+          points[j] = points[j + 1];
+          points[j + 1] = temp;
         }
       }
-      if (n < 3 || s[0].p1.getX() != s[n - 1].p2.getX() || s[0].p1.getY() != s[n - 1].p2.getY()) {
-        throw invalid_argument("At least 3 edges and first connect to last");
-      }
-      for (int i = 0; i < n; i++) {
-        seg[i] = s[i];
-      }
-      edgeCount = n;
-  }  // to construct a shape with a serial of segment. Throw an invalid_argument if the segment can not construct a close path.
-
-  float getPerimeter() {
-    float perimeter = 0;
-    for (int i = 0; i < edgeCount; i++) {
-        perimeter += seg[i].getLength();
     }
-    return perimeter;
-  }
 
-  Segment& getSeg(int index) {
-      return seg[index];
+    double max_height = points[0].y;
+    double total_length = 0;
+
+    // 計算總長度  用max_height記錄最高點
+    for (int i = 1; i < number; i++) {
+      if (points[i].y > points[i - 1].y) {
+        if (points[i].y > max_height) {
+          double slope_length = sqrt(pow(points[i].x - points[i - 1].x, 2) + pow(points[i].y - points[i - 1].y, 2));
+          total_length += slope_length * ((points[i].y - max_height) / (points[i].y - points[i - 1].y));
+          max_height = points[i].y;
+        }
+      }
+    }
+
+    printf("%.2f\n", total_length);
+
+    delete[] points;
   }
 };
 
-class Rectangle : public Shape {
-public:
-  Rectangle(Segment *s) : Shape(s, 4){}
-  float getArea(){
-    return getSeg(0).getLength() * getSeg(1).getLength();
+int main() {
+  int T;
+  cin >> T;
+
+  HillClimb hillClimb;
+
+  for (int i = 0; i < T; i++) {
+    hillClimb.processTestCase();
   }
-};
+
+  return 0;
+}
