@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void allocArray(int*** p, int m, int n) {
+void allocArray(int*** p, int m, int n) {  //p = &array 
     (*p) = malloc(sizeof(int *) * m); 
     (*p)[0] = malloc(sizeof(int) * n); 
 

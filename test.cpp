@@ -7,12 +7,12 @@ template <class T>
 class Memory {
  public:
   static T** allocArray(int m, int n) {
-    T* data = (T*)malloc(sizeof(T) * m * n);
+    T** array = new T*[m];
 
-    T** array = (T**)malloc(sizeof(T*) * m);
+    array[0] = new T[n];
 
-    for (int i = 0; i < m; i++) {
-      array[i] = &data[i * n];
+    for (int i = 1; i < m; i++) {
+      array[i] = array[0] + i * n;
     }
 
     return array;
@@ -32,8 +32,8 @@ int main() {
     cout << endl;
   }
 
-  free(array[0]);
-  free(array);
+  delete[] array[0];
+  delete[] array;
 
   return 0;
 }
