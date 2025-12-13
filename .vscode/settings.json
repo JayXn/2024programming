@@ -47,5 +47,6 @@
     "typeinfo": "cpp",
     "bitset": "cpp"
   },
-  "cmake.configureOnOpen": false
+  "cmake.configureOnOpen": false,
+  "r.lsp.promptToInstall": false
 }
